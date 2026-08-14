@@ -1,0 +1,54 @@
+import java.util.*;
+import java.util.function.Function;
+
+public class Task6RideSharingFunctional {
+	
+	public static void main(String [] args) {
+		
+		Scanner sc= new Scanner(System.in);
+		
+		int n = sc.nextInt();
+		
+		Map<String, Function<Double, Double>> fareCalculators = new HashMap<>();
+		
+		
+		fareCalculators.put("bike", distance -> distance * 5 );
+		fareCalculators.put("auto", distance -> distance * 12 );
+		fareCalculators.put("cab", distance -> distance * 12 );
+		
+		for (int i =0; i < n; i++) {
+			
+			String rideType = sc.next();
+			double distance = sc.nextDouble();
+			
+			try {
+				if (distance <= 0) {
+					throw new IllegalArgumentException("Invalid distance");
+					
+				}
+				Function<Double, Double> fareCalculator =
+						fareCalculators.get(rideType.toLowerCase());
+				
+				if (fareCalculator == null) {
+					throw new IllegalArgumentException("Invalid ride type");
+					
+				}
+				
+				double fare = fareCalculator.apply(distance);
+				
+				System.out.println((int) fare);
+				
+				
+						
+						
+				
+			}catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}
+			
+		}
+		sc.close();
+		
+	}
+
+}
